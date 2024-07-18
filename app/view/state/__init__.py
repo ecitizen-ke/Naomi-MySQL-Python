@@ -46,7 +46,7 @@ def getStates():
     result=state.get_States()
     
     if result:
-        response=make_response({"message": "state displayed successfully", "status": 201,"result":result},201)
+        response=make_response({"message": "state displayed successfully", "status": 200,"result":result},200)
         return response
     else:
         response=make_response({"message": "states not displayed", "status": 400},400)
