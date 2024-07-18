@@ -25,10 +25,11 @@ class State:
         result=self.db.cursor.rowcount
 
         if result:
+            self.db.conn.commit()
             return True
 
         # Commit data to the database
-        self.db.conn.commit()
+        
         # Close cursor
         self.db.cursor.close()
         # Close connection

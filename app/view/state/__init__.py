@@ -1,4 +1,4 @@
-from flask import Blueprint, request, jsonify
+from flask import Blueprint, request, jsonify, make_response
 from app.model import State
 
 import os
@@ -29,9 +29,11 @@ def register():
     result=state.create(name, abbreviation, capital,population, year_admitted)
 
     if result:
-        return jsonify({"message": "state created successfully", "status": 201,"result":result})
+        response=make_response({"message": "state created successfully", "status": 201,"result":data},201)
+        return response
     else:
-        return jsonify({"message": "state not created successfully", "status": 400})
+        response=make_response({"message": "state not created successfully", "status": 400},400)
+        return response
 
 
 @state_bp.route("/states",methods=["GET"])
@@ -42,11 +44,13 @@ def getStates():
     state=State()
 
     result=state.get_States()
-
+    
     if result:
-        return jsonify({"message": "states displayed successfully", "status": 201,"result":result})
+        response=make_response({"message": "state displayed successfully", "status": 201,"result":result},201)
+        return response
     else:
-        return jsonify({"message": "states not displayed", "status": 400})
+        response=make_response({"message": "states not displayed", "status": 400},400)
+        return response
 
 
 @state_bp.route("/updateState",methods=["PUT"])
@@ -59,11 +63,13 @@ def updateState():
     population=data.get("population")
     
     result=state.update_State(id,population)
-
+    
     if result:
-        return jsonify({"message": "state updated successfully", "status": 201,"result":result})
+        response=make_response({"message": "state updated successfully", "status": 202,"result":result},202)
+        return response
     else:
-        return jsonify({"message": "state not updated", "status": 400,"result":result})
+        response=make_response({"message": "states not updated", "status": 400},400)
+        return response
 
 
 @state_bp.route("/deleteState",methods=["DELETE"])
@@ -75,11 +81,13 @@ def deleteState():
     id=data.get("id")
 
     result=state.delete_State(id)
-
+    
     if result:
-        return jsonify({"message": "state deleted successfully", "status": 201,"result":result})
+        response=make_response({"message": "state deleted successfully", "status": 200,"result":result},200)
+        return response
     else:
-        return jsonify({"message": "state not deleted", "status": 400,"result":result})
+        response=make_response({"message": "states not deleted", "status": 400},400)
+        return response
 
 @state_bp.route("/filterStateStartingWithA",methods=["GET"])
 def filterStateStartingWithA():
@@ -89,11 +97,13 @@ def filterStateStartingWithA():
     state=State()
 
     result=state.filter_State_Starting_with_A()
-
+    
     if result:
-        return jsonify({"message": "states filtered successfully", "status": 201,"result":result})
+        response=make_response({"message": "state filtered successfully", "status": 200,"result":result},200)
+        return response
     else:
-        return jsonify({"message": "states not filtered", "status": 400,"result":result})
+        response=make_response({"message": "states not filtered", "status": 400},400)
+        return response
 
 @state_bp.route("/searchStateByName",methods=["POST"])
 def searchStateByName():
@@ -109,9 +119,11 @@ def searchStateByName():
     result=state.search_State_By_Name(name)
 
     if result:
-        return jsonify({"message": "search successful", "status": 201,"result":result})
+        response=make_response({"message": "search successful", "status": 200,"result":result},200)
+        return response
     else:
-        return jsonify({"message": "search unsuccessful", "status": 400,"result":result})
+        response=make_response({"message": "search unsuccessful", "status": 400},400)
+        return response
 
 @state_bp.route("/listStateCapitals",methods=["GET"])
 def listStateCapital():
@@ -121,11 +133,13 @@ def listStateCapital():
     state=State()
 
     result=state.list_State_Capital()
-
+    
     if result:
-        return jsonify({"message": "states listed successfully", "status": 201,"result":result})
+        response=make_response({"message": "states listed successfully", "status": 200,"result":result},200)
+        return response
     else:
-        return jsonify({"message": "states not listed", "status": 400,"result":result})
+        response=make_response({"message": "states not listed", "status": 400},400)
+        return response
 
 
 @state_bp.route("/findMostPopulousState",methods=["GET"])
@@ -136,11 +150,13 @@ def findMostPopulousState():
     state=State()
 
     result=state.find_Most_Populous_State()
-
+    
     if result:
-        return jsonify({"message": "most popular state listed successfully", "status": 201,"result":result})
+        response=make_response({"message": "most popular state listed successfully", "status": 200,"result":result},200)
+        return response
     else:
-        return jsonify({"message": "most popular state not listed", "status": 400,"result":result})
+        response=make_response({"message": "most popular state not listed", "status": 400},400)
+        return response
 
 @state_bp.route("/averagePopulation",methods=["GET"])
 def averagePopulation():
@@ -152,9 +168,11 @@ def averagePopulation():
     result=state.average_Population()
 
     if result:
-        return jsonify({"message": "average of population listed successfully", "status": 201,"result":result})
+        response=make_response({"message": "average of population listed successfully", "status": 200,"result":result},200)
+        return response
     else:
-        return jsonify({"message": "average of population not listed", "status": 400,"result":result})
+        response=make_response({"message": "average of population not listed", "status": 400},400)
+        return response
 
 @state_bp.route("/statesAdmittedBetween1750And1850",methods=["GET"])
 def statesAdmittedBetween1750And1850():
@@ -164,11 +182,13 @@ def statesAdmittedBetween1750And1850():
     state=State()
 
     result=state.states_Admitted_Between_1750_And_1850()
-
+    
     if result:
-        return jsonify({"message": "states admitted between 1750 and 1850 listed successfully", "status": 201,"result":result})
+        response=make_response({"message": "states admitted between 1750 and 1850 listed successfully", "status": 200,"result":result},200)
+        return response
     else:
-        return jsonify({"message": "states not listed", "status": 400,"result":result})
+        response=make_response({"message": "states not listed", "status": 400},400)
+        return response
 
 
 @state_bp.route("/countStatesByPopulation",methods=["GET"])
@@ -179,8 +199,10 @@ def countStatesByPopulation():
     state=State()
 
     result=state.count_States_By_Population()
-
+        
     if result:
-        return jsonify({"message": "states counted within population range 1000000 and 5000000 listed", "status": 201,"result":result})
+        response=make_response({"message": "states counted within population range 1000000 and 5000000 listed", "status": 200,"result":result},200)
+        return response
     else:
-        return jsonify({"message": "states not listed", "status": 400,"result":result})
+        response=make_response({"message": "states not listed", "status": 400},400)
+        return response
